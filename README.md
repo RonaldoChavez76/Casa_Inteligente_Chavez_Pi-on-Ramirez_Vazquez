@@ -102,5 +102,10 @@ Este proyecto implementa un sistema inteligente de seguridad doméstica que inte
 https://youtube.com/shorts/aCrdjMsCMPE
 ---
 
+### 💻 Codigos
+
+[Ver codigo de flujo de node-red](flows.json)
+[Ver codigo principal del proyecto](elcodigoquejala.py)
+
 ## 📝 Notas
 - Este sistema puede expandirse fácilmente con más sensores (gas, humo, cámaras).
