@@ -87,6 +87,21 @@ Este proyecto implementa un sistema inteligente de seguridad doméstica que inte
 
 ---
 
+## 💾 Base de datos
+
+<img src="https://github.com/user-attachments/assets/0902bfa4-fbbc-4349-af21-528a0ca8cd3d" width="400"/>
+<img src="https://github.com/user-attachments/assets/e339d6fe-0782-415d-bc65-b7fa36eafc94" width="400"/>
+<img src="https://github.com/user-attachments/assets/dc7b24f0-eb00-49f3-9aeb-fba6c1406657" width="400"/>
+
+---
+
+## Diagrama de Node-Red
+
+<img src="![image](https://github.com/user-attachments/assets/8df2f803-b80f-4314-9c89-23f6af18b4b1)
+" width="400"/>
+
+---
+
 ## 🚨 Evidencia de Trabajo
 
 ### 💻 Fotos
@@ -107,7 +122,7 @@ Este proyecto implementa un sistema inteligente de seguridad doméstica que inte
 
 ---
 
-## 💻 Códigos
+### 💻 Códigos
 
 - [Ver código de flujo de Node-RED](flows.json)
 - [Ver código principal del proyecto](elcodigoquejala.py)
