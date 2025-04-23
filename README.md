@@ -8,21 +8,21 @@ Este proyecto implementa un sistema inteligente de seguridad doméstica que inte
 
 ### 🔍 Sensores
 
-| Sensor                             | Función                                                                 | Precio estimado | Imagen                                                                                             |
-|------------------------------------|-------------------------------------------------------------------------|-----------------|----------------------------------------------------------------------------------------------------|
-| Sensor de movimiento (PIR)         | Detecta la presencia de personas en zonas estratégicas.                 | $70 MXN         | <img src="https://github.com/user-attachments/assets/96e3feb2-3243-4aeb-b737-dc8b5042c66d" width="150"/> |
-| Sensor magnético de puertas/ventanas | Detecta la apertura o cierre, ideal para entradas.                    | $100 MXN        | <img src="https://github.com/user-attachments/assets/0e3a6ee9-f653-42e4-9ba6-29b930e8a6c4" width="150"/> |
-| Sensor de lectura NFC              | Controla el acceso al hogar.                                            | $30 MXN         | <img src="https://github.com/user-attachments/assets/da28a110-a10e-45f0-b60f-63177d238a76" width="150"/> |
+| Sensor                             | Función                                                                 | Precio estimado | Imagen                                                                 |
+|------------------------------------|-------------------------------------------------------------------------|-----------------|------------------------------------------------------------------------|
+| Sensor de movimiento (PIR)         | Detecta la presencia de personas en zonas estratégicas.                 | $70 MXN         | ![PIR](https://github.com/user-attachments/assets/96e3feb2-3243-4aeb-b737-dc8b5042c66d) |
+| Sensor magnético de puertas/ventanas | Detecta la apertura o cierre, ideal para entradas.                    | $100 MXN        | ![Magnético](https://github.com/user-attachments/assets/0e3a6ee9-f653-42e4-9ba6-29b930e8a6c4) |
+| Sensor de lectura NFC              | Controla el acceso al hogar.                                            | $30 MXN         | ![NFC](https://github.com/user-attachments/assets/da28a110-a10e-45f0-b60f-63177d238a76) |
 
 ---
 
 ### ⚙️ Actuadores
 
-| Actuador                           | Función                                                                 | Precio estimado | Imagen                                                                                             |
-|------------------------------------|-------------------------------------------------------------------------|-----------------|----------------------------------------------------------------------------------------------------|
-| Alarma sonora (Buzzer)             | Emite sonido ante movimientos o aperturas sospechosas.                 | $35 MXN         | <img src="https://github.com/user-attachments/assets/b55f9377-e232-47cd-a03b-d1223a9a00ff" width="150"/> |
-| Cinta LED WS2812B                  | Iluminación de alerta visual o simulación de presencia.                | $40 MXN         | <img src="https://github.com/user-attachments/assets/12be199b-f9e9-43c0-98df-ca089a4a1a65" width="150"/> |
-| Pantalla táctil                    | Interfaz gráfica para monitoreo y control del sistema.                 | $487 MXN        | <img src="https://github.com/user-attachments/assets/dc6bc78a-3607-4741-81ba-d8af06dbe695" width="150"/> |
+| Actuador                | Función                                                   | Precio estimado | Imagen                                                                 |
+|-------------------------|-----------------------------------------------------------|-----------------|------------------------------------------------------------------------|
+| Alarma sonora (Buzzer)  | Emite sonido ante movimientos o aperturas sospechosas.    | $35 MXN         | ![Buzzer](https://github.com/user-attachments/assets/b55f9377-e232-47cd-a03b-d1223a9a00ff) |
+| Cinta LED WS2812B       | Iluminación de alerta visual o simulación de presencia.   | $40 MXN         | ![LED](https://github.com/user-attachments/assets/12be199b-f9e9-43c0-98df-ca089a4a1a65) |
+| Pantalla táctil         | Interfaz gráfica para monitoreo y control del sistema.    | $487 MXN        | ![Pantalla](https://github.com/user-attachments/assets/dc6bc78a-3607-4741-81ba-d8af06dbe695) |
 
 ---
 
@@ -43,12 +43,12 @@ Este proyecto implementa un sistema inteligente de seguridad doméstica que inte
 
 ## 📡 Tecnologías y Protocolo
 
-| Elemento             | Descripción                                                               |
-|----------------------|---------------------------------------------------------------------------|
-| Microcontrolador     | ESP32 con conectividad Wi-Fi integrada.                                   |
-| Comunicación remota  | MQTT para envío/recepción de eventos.                                     |
-| Base de datos        | PostgreSQL para registrar eventos.                                        |
-| Monitoreo visual     | Pantalla táctil conectada vía Wi-Fi.                                      |
+| Elemento             | Descripción                                               |
+|----------------------|-----------------------------------------------------------|
+| Microcontrolador     | ESP32 con conectividad Wi-Fi integrada.                   |
+| Comunicación remota  | MQTT para envío/recepción de eventos.                     |
+| Base de datos        | PostgreSQL para registrar eventos.                        |
+| Monitoreo visual     | Pantalla táctil conectada vía Wi-Fi.                      |
 
 ---
 
@@ -72,33 +72,33 @@ Este proyecto implementa un sistema inteligente de seguridad doméstica que inte
 
 - Plataforma disponible en:
   - **Pantalla física (interfaz local)**  
-    <img src="https://github.com/user-attachments/assets/c09f5314-27ce-4f51-bfc1-8ae99ecf730c" width="200"/>
+    ![Pantalla física](https://github.com/user-attachments/assets/c09f5314-27ce-4f51-bfc1-8ae99ecf730c)
+
 - Permite:
   - Ver estado actual de sensores y actuadores.  
-    <img src="https://github.com/user-attachments/assets/1a775980-b5be-46fa-b1d3-ea330c0931f7" width="200"/>
+    ![Estado](https://github.com/user-attachments/assets/1a775980-b5be-46fa-b1d3-ea330c0931f7)
   - Recibir alertas inmediatas.  
-    <img src="https://github.com/user-attachments/assets/408aaf36-4658-4ca2-82ff-d68a762f1aed" width="200"/>
+    ![Alerta](https://github.com/user-attachments/assets/408aaf36-4658-4ca2-82ff-d68a762f1aed)
 
 ---
 
 ## 📔 Diagrama de conexión
 
-<img src="https://github.com/user-attachments/assets/0d5c6544-a294-4e7d-9292-73d284c03e36" width="400"/>
+![Diagrama conexión](https://github.com/user-attachments/assets/0d5c6544-a294-4e7d-9292-73d284c03e36)
 
 ---
 
 ## 💾 Base de datos
 
-<img src="https://github.com/user-attachments/assets/0902bfa4-fbbc-4349-af21-528a0ca8cd3d" width="400"/>
-<img src="https://github.com/user-attachments/assets/e339d6fe-0782-415d-bc65-b7fa36eafc94" width="400"/>
-<img src="https://github.com/user-attachments/assets/dc7b24f0-eb00-49f3-9aeb-fba6c1406657" width="400"/>
+![BD 1](https://github.com/user-attachments/assets/0902bfa4-fbbc-4349-af21-528a0ca8cd3d)  
+![BD 2](https://github.com/user-attachments/assets/e339d6fe-0782-415d-bc65-b7fa36eafc94)  
+![BD 3](https://github.com/user-attachments/assets/dc7b24f0-eb00-49f3-9aeb-fba6c1406657)
 
 ---
 
-## Diagrama de Node-Red
+## 🔁 Diagrama de Node-RED
 
-<img src="![image](https://github.com/user-attachments/assets/8df2f803-b80f-4314-9c89-23f6af18b4b1)
-" width="400"/>
+![Node-RED](https://github.com/user-attachments/assets/8df2f803-b80f-4314-9c89-23f6af18b4b1)
 
 ---
 
@@ -131,4 +131,4 @@ Este proyecto implementa un sistema inteligente de seguridad doméstica que inte
 
 ## 📝 Notas
 
-Este sistema puede expandirse fácilmente con más sensores (gas, humo, cámaras).  
+Este sistema puede expandirse fácilmente con más sensores (gas, humo, cámaras).
