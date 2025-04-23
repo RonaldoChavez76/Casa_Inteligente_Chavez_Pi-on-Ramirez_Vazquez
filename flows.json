@@ -1,0 +1,466 @@
+[
+    {
+        "id": "adea4fa929ea75d0",
+        "type": "tab",
+        "label": "Flow 6",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "1a1a1a1a1a1a1a1a",
+        "type": "mqtt in",
+        "z": "adea4fa929ea75d0",
+        "name": "Puerta - MQTT",
+        "topic": "iot/sensor/door",
+        "qos": "2",
+        "datatype": "auto",
+        "broker": "114ba32e9814292c",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 220,
+        "y": 200,
+        "wires": [
+            [
+                "2b2b2b2b2b2b2b2b"
+            ]
+        ]
+    },
+    {
+        "id": "2b2b2b2b2b2b2b2b",
+        "type": "function",
+        "z": "adea4fa929ea75d0",
+        "name": "Formatear Payload Puerta",
+        "func": "let estado = (msg.payload || \"\").toLowerCase().trim();\nmsg.payload = {\n    state: estado === \"abierta\" ? true : false\n};\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 460,
+        "y": 200,
+        "wires": [
+            [
+                "3c3c3c3c3c3c3c3c",
+                "debug_db"
+            ]
+        ]
+    },
+    {
+        "id": "3c3c3c3c3c3c3c3c",
+        "type": "postgresql",
+        "z": "adea4fa929ea75d0",
+        "name": "Postgres - Insert Puerta",
+        "query": "INSERT INTO door_data(state, reading_time) VALUES (\n    '{{{msg.payload.state}}}',\n    NOW()\n);\n",
+        "postgreSQLConfig": "3333de78be54fbb7",
+        "split": false,
+        "rowsPerMsg": "",
+        "x": 790,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "debug_db",
+        "type": "debug",
+        "z": "adea4fa929ea75d0",
+        "name": "Debug DB",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "x": 770,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "540df8574d5d1f9e",
+        "type": "mqtt in",
+        "z": "adea4fa929ea75d0",
+        "name": "NFC - MQTT",
+        "topic": "iot/sensor/nfc",
+        "qos": "2",
+        "datatype": "auto",
+        "broker": "114ba32e9814292c",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 210,
+        "y": 320,
+        "wires": [
+            [
+                "9c4383767be4bc54",
+                "8ddf404773febe4f",
+                "3ed1dd80dcd83cd3"
+            ]
+        ]
+    },
+    {
+        "id": "9c4383767be4bc54",
+        "type": "postgresql",
+        "z": "adea4fa929ea75d0",
+        "name": "Postgres - Insert NFC",
+        "query": "INSERT INTO nfc_data(tag_id, reading_time)\nVALUES ('{{{msg.payload}}}', NOW());\n",
+        "postgreSQLConfig": "3333de78be54fbb7",
+        "split": false,
+        "rowsPerMsg": "",
+        "x": 780,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "8ddf404773febe4f",
+        "type": "debug",
+        "z": "adea4fa929ea75d0",
+        "name": "Debug DB",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "x": 770,
+        "y": 400,
+        "wires": []
+    },
+    {
+        "id": "c83619abe22502e5",
+        "type": "inject",
+        "z": "adea4fa929ea75d0",
+        "name": "Consultar NFC",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "60",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "1",
+        "topic": "SELECT tag_id, reading_time FROM nfc_data ORDER BY reading_time DESC LIMIT 100",
+        "payload": "",
+        "payloadType": "date",
+        "x": 200,
+        "y": 520,
+        "wires": [
+            [
+                "226bc070b585648e"
+            ]
+        ]
+    },
+    {
+        "id": "226bc070b585648e",
+        "type": "postgresql",
+        "z": "adea4fa929ea75d0",
+        "name": "Consultar DB",
+        "query": "SELECT tag_id, reading_time FROM nfc_data ORDER BY reading_time DESC LIMIT 100",
+        "postgreSQLConfig": "3333de78be54fbb7",
+        "split": false,
+        "rowsPerMsg": 1,
+        "outputs": 1,
+        "x": 410,
+        "y": 520,
+        "wires": [
+            [
+                "04c42647519509cf"
+            ]
+        ]
+    },
+    {
+        "id": "04c42647519509cf",
+        "type": "function",
+        "z": "adea4fa929ea75d0",
+        "name": "Formatear para gráfico NFC",
+        "func": "// Verifica si el mensaje tiene datos válidos (un arreglo con datos de NFC)\nif (Array.isArray(msg.payload) && msg.payload.length > 0) {\n    // Crear un objeto para agrupar los datos por tag_id\n    const dataByTag = {};\n\n    // Recorrer los datos de NFC\n    msg.payload.forEach(item => {\n        // Asegurarse de que cada item tenga un tag_id y una marca de tiempo (reading_time)\n        if (!item.tag_id || !item.reading_time) return;\n\n        // Convertir la marca de tiempo a un valor de timestamp\n        const timestamp = new Date(item.reading_time).getTime();\n        const tagId = item.tag_id;\n\n        // Agrupar las lecturas por tag_id\n        if (!dataByTag[tagId]) {\n            dataByTag[tagId] = [];\n        }\n\n        // Añadir una nueva entrada con el timestamp y el valor de lectura (1 en este caso)\n        dataByTag[tagId].push({\n            x: timestamp,  // Timestamp para el gráfico\n            y: 1           // Valor de lectura (se puede modificar si es necesario)\n        });\n    });\n\n    // Crear listas para las series y los datos\n    const series = [];\n    const data = [];\n\n    // Iterar sobre los tags y sus datos agrupados\n    for (const tagId in dataByTag) {\n        series.push(tagId);       // Agregar el tag_id como una serie\n        data.push(dataByTag[tagId]); // Agregar los datos correspondientes a la serie\n    }\n\n    // Asignar los datos formateados a msg.payload para que se utilicen en el gráfico o visualización\n    msg.payload = [{\n        series: series,  // Nombres de las series (tag_id)\n        data: data       // Datos correspondientes a cada serie\n    }];\n\n    // Para debug: Mostrar los datos formateados en la consola de Node-RED\n    node.warn(\"Datos formateados para NFC: \" + JSON.stringify(msg.payload).substring(0, 200) + \"...\");\n\n} else {\n    // Si no hay datos NFC, mostrar un mensaje de \"sin datos\" para visualización\n    node.warn(\"No hay datos NFC para mostrar.\");\n    msg.payload = [{ series: ['No Data'], data: [[]] }];\n}\n\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 640,
+        "y": 520,
+        "wires": [
+            [
+                "612ca96b88052001"
+            ]
+        ]
+    },
+    {
+        "id": "612ca96b88052001",
+        "type": "ui_chart",
+        "z": "adea4fa929ea75d0",
+        "name": "Gráfico NFC",
+        "group": "a8286da6cf57554f",
+        "order": 1,
+        "width": "6",
+        "height": "6",
+        "label": "Lecturas NFC",
+        "chartType": "line",
+        "legend": "true",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "Esperando datos...",
+        "dot": true,
+        "ymin": "0",
+        "ymax": "2",
+        "removeOlder": "24",
+        "removeOlderPoints": "",
+        "removeOlderUnit": "3600",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
+        "x": 860,
+        "y": 520,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "1b693f172335e4ce",
+        "type": "inject",
+        "z": "adea4fa929ea75d0",
+        "name": "Consultar Door",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "60",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "2",
+        "topic": "SELECT state, reading_time FROM door_data ORDER BY reading_time DESC LIMIT 100",
+        "payload": "",
+        "payloadType": "date",
+        "x": 200,
+        "y": 580,
+        "wires": [
+            [
+                "abf8d8f6ce6c0000"
+            ]
+        ]
+    },
+    {
+        "id": "abf8d8f6ce6c0000",
+        "type": "postgresql",
+        "z": "adea4fa929ea75d0",
+        "name": "Consultar DB",
+        "query": "SELECT state, reading_time \nFROM door_data \nWHERE reading_time >= CURRENT_DATE - INTERVAL '30 days'\nORDER BY reading_time DESC",
+        "postgreSQLConfig": "3333de78be54fbb7",
+        "split": false,
+        "rowsPerMsg": 1,
+        "outputs": 1,
+        "x": 410,
+        "y": 580,
+        "wires": [
+            [
+                "44cb41b4437c93ce"
+            ]
+        ]
+    },
+    {
+        "id": "44cb41b4437c93ce",
+        "type": "function",
+        "z": "adea4fa929ea75d0",
+        "name": "Formatear para gráfico Door",
+        "func": "// Formatear para gráfico Door - Agrupando por día\nconst doorsByDay = {};\n\nif (Array.isArray(msg.payload) && msg.payload.length > 0) {\n    // Agrupar por día\n    msg.payload.forEach(item => {\n        if (item.reading_time === undefined) return;\n        \n        // Extraer solo la fecha (sin hora)\n        const fullDate = new Date(item.reading_time);\n        const dateKey = fullDate.toISOString().split('T')[0]; // formato YYYY-MM-DD\n        \n        // Inicializar contadores para el día si no existen\n        if (!doorsByDay[dateKey]) {\n            doorsByDay[dateKey] = {\n                open: 0,\n                closed: 0\n            };\n        }\n        \n        // Incrementar el contador según el estado\n        if (item.state) {\n            doorsByDay[dateKey].open += 1;\n        } else {\n            doorsByDay[dateKey].closed += 1;\n        }\n    });\n    \n    // Preparar los datos para el gráfico\n    const labels = [];    // Fechas (eje X)\n    const openData = [];  // Veces abierta (eje Y)\n    const closedData = []; // Veces cerrada (para comparación)\n    \n    // Ordenar las fechas cronológicamente\n    const sortedDates = Object.keys(doorsByDay).sort();\n    \n    // Construir los arrays para el gráfico\n    sortedDates.forEach(date => {\n        // Formatear fecha para visualización (opcional)\n        const [year, month, day] = date.split('-');\n        const formattedDate = `${day}/${month}`;\n        \n        labels.push(formattedDate);\n        openData.push(doorsByDay[date].open);\n        closedData.push(doorsByDay[date].closed);\n    });\n    \n    // Formato para el gráfico de barras\n    msg.payload = [{\n        labels: labels,\n        series: [\"Aperturas\", \"Cierres\"],\n        data: [openData, closedData]\n    }];\n    \n} else {\n    msg.payload = [{\n        labels: [\"Sin datos\"],\n        series: [\"Sin datos\"],\n        data: [[0]]\n    }];\n}\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 630,
+        "y": 580,
+        "wires": [
+            [
+                "cdf4b00e64e637a6"
+            ]
+        ]
+    },
+    {
+        "id": "cdf4b00e64e637a6",
+        "type": "ui_chart",
+        "z": "adea4fa929ea75d0",
+        "name": "Gráfico Door",
+        "group": "a8286da6cf57554f",
+        "order": 2,
+        "width": "6",
+        "height": "6",
+        "label": "Estado Puerta",
+        "chartType": "bar",
+        "legend": "true",
+        "xformat": "HH:mm:ss",
+        "interpolate": "step",
+        "nodata": "Esperando datos...",
+        "dot": true,
+        "ymin": "0",
+        "ymax": "1",
+        "removeOlder": "24",
+        "removeOlderPoints": "",
+        "removeOlderUnit": "3600",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#2ca02c",
+            "#d62728",
+            "#ff7f0e",
+            "#1f77b4",
+            "#98df8a",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5",
+            "#aec7e8"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
+        "x": 860,
+        "y": 580,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "def2f78af0ce3dd1",
+        "type": "e-mail",
+        "z": "adea4fa929ea75d0",
+        "server": "smtp.gmail.com",
+        "port": "465",
+        "authtype": "BASIC",
+        "saslformat": true,
+        "token": "oauth2Response.access_token",
+        "secure": true,
+        "tls": true,
+        "name": "titosgames32@gmail.com",
+        "dname": "enviar_datos",
+        "x": 590,
+        "y": 440,
+        "wires": []
+    },
+    {
+        "id": "3ed1dd80dcd83cd3",
+        "type": "function",
+        "z": "adea4fa929ea75d0",
+        "name": "Formato email",
+        "func": "msg.topic = \"Notificación de acceso NFC\";\nmsg.payload = \"Se ha detectado un acceso con NFC. UID: \" + msg.payload;\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 360,
+        "y": 420,
+        "wires": [
+            [
+                "def2f78af0ce3dd1"
+            ]
+        ]
+    },
+    {
+        "id": "114ba32e9814292c",
+        "type": "mqtt-broker",
+        "name": "",
+        "broker": "broker.emqx.io",
+        "port": "1883",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "autoUnsubscribe": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthRetain": "false",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closeRetain": "false",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willRetain": "false",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "3333de78be54fbb7",
+        "type": "postgreSQLConfig",
+        "name": "localhost",
+        "host": "localhost",
+        "hostFieldType": "str",
+        "port": "5432",
+        "portFieldType": "num",
+        "database": "iot_project",
+        "databaseFieldType": "str",
+        "ssl": "false",
+        "sslFieldType": "bool",
+        "applicationName": "",
+        "applicationNameType": "str",
+        "max": "10",
+        "maxFieldType": "num",
+        "idle": "1000",
+        "idleFieldType": "num",
+        "connectionTimeout": "10000",
+        "connectionTimeoutFieldType": "num",
+        "user": "postgres",
+        "userFieldType": "str",
+        "password": "florluz10",
+        "passwordFieldType": "str"
+    },
+    {
+        "id": "a8286da6cf57554f",
+        "type": "ui_group",
+        "name": "Sensores",
+        "tab": "a368e66a94e693c6",
+        "order": 1,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "a368e66a94e693c6",
+        "type": "ui_tab",
+        "name": "Dashboard IoT",
+        "icon": "dashboard",
+        "order": 5,
+        "disabled": false,
+        "hidden": false
+    }
+]
