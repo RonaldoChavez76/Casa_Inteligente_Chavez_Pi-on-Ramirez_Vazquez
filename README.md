@@ -117,4 +117,3 @@ Este proyecto implementa un sistema inteligente de seguridad doméstica que inte
 ## 📝 Notas
 
 Este sistema puede expandirse fácilmente con más sensores (gas, humo, cámaras).  
-✅ **Sugerencia:** Todos los componentes usados son de bajo costo y ampliamente disponibles.  
