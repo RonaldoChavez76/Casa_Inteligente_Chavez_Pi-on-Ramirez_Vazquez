@@ -129,6 +129,12 @@ Este proyecto implementa un sistema inteligente de seguridad doméstica que inte
 
 ---
 
+### Retroalimentacion
+#Para Carlos
+Quiero reconocer el esfuerzo que mostraste durante el desarrollo del proyecto de IoT. A pesar de los inconvenientes que enfrentamos, como la quema accidental de algunos actuadores, siempre estuviste dispuesto a seguir adelante y aportar al equipo. Tu compromiso y actitud positiva fueron clave para superar esos obstáculos.
+
+Una área en la que podrías trabajar un poco más es en la distribución del tiempo. Mejorar en ese aspecto te permitiría organizarte mejor y dar aún más calidad a tus aportes. Sabemos que los errores ocurren, sobre todo en proyectos con componentes físicos, pero con una mejor planificación, podrías anticipar problemas y solucionarlos más rápido.
+
 ## 📝 Notas
 
 Este sistema puede expandirse fácilmente con más sensores (gas, humo, cámaras).
