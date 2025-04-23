@@ -130,18 +130,18 @@ Este proyecto implementa un sistema inteligente de seguridad doméstica que inte
 ---
 
 ### Retroalimentacion
-##Para Carlos
+## Para Carlos
 
 Quiero reconocer el esfuerzo que mostraste durante el desarrollo del proyecto de IoT. A pesar de los inconvenientes que enfrentamos, como la quema accidental de algunos actuadores, siempre estuviste dispuesto a seguir adelante y aportar al equipo. Tu compromiso y actitud positiva fueron clave para superar esos obstáculos.
 
 Una área en la que podrías trabajar un poco más es en la distribución del tiempo. Mejorar en ese aspecto te permitiría organizarte mejor y dar aún más calidad a tus aportes. Sabemos que los errores ocurren, sobre todo en proyectos con componentes físicos, pero con una mejor planificación, podrías anticipar problemas y solucionarlos más rápido.
 
-##Para Ronaldo
+## Para Ronaldo
 
 Quiero comenzar destacando los aspectos positivos de tu participación en el proyecto. Mostraste disposición para colaborar y cumplir con tus tareas, lo cual ayudó a que el equipo avanzara de forma constante. También se nota que tienes iniciativa, lo cual es una cualidad muy valiosa en este tipo de proyectos prácticos.
 
 Dicho esto, sería bueno que trabajes un poco en enfocar primero los aspectos positivos de cada situación. A veces, una actitud más optimista puede motivar más al equipo y facilitar la resolución de problemas. Además, te recomendaría que investigues un poco más antes de comenzar a trabajar directamente con los sensores o componentes. Una base más sólida te permitirá prevenir errores y te dará mayor seguridad en la ejecución.
-
+---
 ## 📝 Notas
 
 Este sistema puede expandirse fácilmente con más sensores (gas, humo, cámaras).
