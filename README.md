@@ -1,6 +1,6 @@
-# 🏠 Sistema de Seguridad y Automatización para el Hogar
+# 🏠 Sistema de Seguridad para el Hogar
 
-Este proyecto implementa un sistema inteligente de seguridad doméstica que integra sensores, actuadores y una interfaz de monitoreo en una pantalla de Raspberry Pi, para ofrecer protección en tiempo real y respuesta automatizada ante eventos sospechosos.
+Este proyecto implementa un sistema inteligente de seguridad doméstica que integra sensores, actuadores y una interfaz de monitoreo en una pantalla de Raspberry Pi, para ofrecer protección en tiempo real y respuesta ante eventos sospechosos.
 
 ---
 
